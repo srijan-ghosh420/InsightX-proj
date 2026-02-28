@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Database files
+*.db
+
+# CSV dataset
+insightx_transactions.csv
+
+# Python cache
+__pycache__/
+*.pyc
