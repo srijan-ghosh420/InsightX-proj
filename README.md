@@ -1,252 +1,116 @@
-Here is a clean, professional **README.md** for your updated **InsightX Analytics Real-Time SQL Engine** project.
+# 📊 InsightX Analytics
 
-You can copy-paste this directly into your `README.md`.
+InsightX Analytics is an AI-powered Text-to-SQL engine built with Python and Streamlit. It allows users to ask natural language questions about their transaction data, automatically generates and executes the correct SQL query, and provides a structured, factual AI insight based *strictly* on the returned data.
 
----
+## ✨ Features
 
-# InsightX – AI Powered Real-Time Transaction Analytics Engine
-
-InsightX is an AI-driven Text-to-SQL analytics engine that allows users to ask natural language questions about transaction data and receive:
-
-* 🧠 Intelligent analytical insight
-* 📜 Automatically generated SQL query
-* 📊 Real-time database results
-
-The system integrates **Google Gemini API** with a local **SQLite database** to create a smart analytics pipeline.
+* **Natural Language Querying:** Ask questions in plain English (e.g., "What was the average transaction amount in March?").
+* **Transparent SQL Generation:** Displays the exact SQL query executed against the database directly in the results table.
+* **Factual AI Insights:** Generates a structured 4-point business report (Direct Response, Statistics, Context, Recommendations) based strictly on real database results to prevent hallucination.
+* **Smart Formatting:** Automatically formats monetary values to Indian Rupees (₹) across the UI and AI insights.
+* **Modern UI:** Responsive, dark/light mode compatible interface with clean typography and gradient elements.
 
 ---
 
-## 🚀 Features
+## 🛠️ Prerequisites
 
-* Natural Language → SQL conversion
-* AI-generated analytical insight
-* Real-time execution on SQLite
-* Failure rate & percentage analysis
-* Weekend vs weekday analytics
-* Device-based analytics (Android / iOS / etc.)
-* Modular architecture (Data Engine + SQL Engine + Main App)
+Make sure you have the following installed on your system:
+
+* [Python 3.8+](https://www.python.org/downloads/)
+* Pip (Python package manager)
+* A valid Google Gemini API Key (for the `text_to_sql_engine.py`)
 
 ---
 
-## 🏗️ Project Structure
+## 📦 Installation & Setup
 
-```
-InsightX-proj/
-│
-├── data_engine.py              # Loads CSV → Cleans → Creates SQLite DB
-├── text_to_sql_engine.py       # Gemini API → Insight + SQL extraction
-├── main_app.py                 # Main interactive analytics engine
-│
-├── transactions.db             # SQLite database (auto-generated)
-├── insightx_transactions.csv   # Dataset
-│
-├── .env                        # Stores Gemini API Key (NOT pushed to GitHub)
-├── .gitignore
-└── README.md
-```
+**1. Clone or download the repository**
+Navigate to the project folder in your terminal.
 
----
-
-## ⚙️ System Architecture
-
-```
-User Question
-      ↓
-Gemini API (Text → Insight + SQL)
-      ↓
-SQL Extraction Engine
-      ↓
-SQLite Database Execution
-      ↓
-Results + Insight Displayed
-```
-
----
-
-## 🧠 Example Query
-
-```
-What is the failure percentage of Android transactions?
-```
-
-### Output:
-
-**AI Insight**
-
-> The failure rate for Android transactions is calculated to evaluate platform reliability.
-
-**Generated SQL**
-
-```sql
-SELECT (SUM(CASE WHEN transaction_status = 'FAILED' THEN 1 ELSE 0 END) * 100.0) / COUNT(*)
-FROM transactions
-WHERE device_type = 'Android';
-```
-
----
-
-## 🛠️ Installation Guide
-
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/srijan-ghosh420/InsightX-proj.git
-cd InsightX-proj
-```
-
----
-
-### 2️⃣ Create Virtual Environment (Recommended)
-
-```bash
+**2. Create a Virtual Environment (Recommended)**
 python -m venv venv
-venv\Scripts\activate   # Windows
-```
 
----
+**3. Activate the Virtual Environment**
 
-### 3️⃣ Install Dependencies
+* **Windows:**
+venv\Scripts\activate
+* **Mac/Linux:**
+source venv/bin/activate
 
-```bash
+**4. Install Dependencies**
+Create a `requirements.txt` file in your directory with the following packages, then run the install command.
+
+*requirements.txt contents:*
+streamlit
+pandas
+google-generativeai
+
+*Run:*
 pip install -r requirements.txt
-```
 
-If no requirements file exists, install manually:
+**5. Database & API Key Configuration**
 
-```bash
-pip install pandas sqlite3 python-dotenv google-generativeai
-```
+* Ensure your `transactions.db` SQLite database is in the root directory.
+* Ensure your Gemini API key is properly configured in your `text_to_sql_engine.py` file or environment variables.
 
 ---
 
-### 4️⃣ Setup Environment Variable
+## 🚀 Running the Application
 
-Create a `.env` file:
+To run the application manually from your terminal, execute:
+streamlit run app.py
 
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
----
-
-### 5️⃣ Create Database
-
-Run:
-
-```bash
-python data_engine.py
-```
-
-This will:
-
-* Load CSV
-* Clean column names
-* Create `transactions` table
-* Generate `transactions.db`
+The app will automatically open in your default web browser at `http://localhost:8501`.
 
 ---
 
-### 6️⃣ Run the Main Application
+## ⚡ Quick Start Scripts (Terminal Executables)
 
-```bash
-python main_app.py
-```
+If you want to run the app with a single click or a single terminal command without manually typing the activation and run commands every time, create one of the following files in your project directory:
 
-You will see:
+### For Windows (`start.bat`)
 
-```
---- InsightX Analytics Real-Time SQL Engine ---
-Ask a question about your transactions:
-```
+Create a new text file, paste this code, and save it as `start.bat`. You can now double-click this file to launch the app.
 
----
+@echo off
+echo =========================================
+echo   Starting InsightX Analytics...
+echo =========================================
 
-## 🧩 Key Modules
+REM Check if virtual environment exists, create if not
+if not exist venv\Scripts\activate (
+echo Creating virtual environment...
+python -m venv venv
+)
 
-### 🔹 data_engine.py
+REM Activate and run
+call venv\Scripts\activate
+echo Installing/Checking dependencies...
+pip install -r requirements.txt -q
+echo Launching Streamlit...
+streamlit run app.py
+pause
 
-* Loads dataset
-* Cleans column names
-* Renames important columns
-* Creates SQLite database table: `transactions`
+### For Mac/Linux (`start.sh`)
 
----
+Create a new file, paste this code, and save it as `start.sh`. Remember to make the script executable by running `chmod +x start.sh` in your terminal first.
 
-### 🔹 text_to_sql_engine.py
+#!/bin/bash
+echo "========================================="
+echo "  Starting InsightX Analytics..."
+echo "========================================="
 
-* Sends prompt to Gemini
-* Extracts:
+# Check if virtual environment exists, create if not
 
-  * AI Insight
-  * SQL Query
-* Returns both separately
+if [ ! -d "venv" ]; then
+echo "Creating virtual environment..."
+python3 -m venv venv
+fi
 
----
+# Activate and run
 
-### 🔹 main_app.py
-
-* Accepts user query
-* Calls AI engine
-* Executes SQL
-* Displays:
-
-  * Insight
-  * Generated SQL
-  * Query Result
-
----
-
-## 📌 Important Notes
-
-* The table name must be `transactions`
-* Do NOT push:
-
-  * `.env`
-  * `.db`
-  * `.csv`
-* Ensure `.gitignore` contains:
-
-```
-.env
-*.db
-*.csv
-__pycache__/
-```
-
----
-
-## 🧪 Example Analytics Supported
-
-* Failure rate by device type
-* Weekend vs weekday performance
-* Transaction count by category
-* Success vs failed ratio
-* Average transaction amount
-* Platform reliability comparison
-
----
-
-## 🔐 Security
-
-* API keys stored in `.env`
-* No secrets pushed to GitHub
-* SQLite local database only
-
----
-
-## 📈 Future Improvements
-
-* Streamlit Web Dashboard
-* Chart Visualization
-* Multi-table Support
-* Caching Layer
-* Error Correction for AI-generated SQL
-* Cloud Deployment
-
----
-
-## 👨‍💻 Author
-
-**Srijan Ghosh**
-AI/ML + Data Engineering Enthusiast
-Project: InsightX – Intelligent Analytics Engine
+source venv/bin/activate
+echo "Installing/Checking dependencies..."
+pip install -r requirements.txt -q
+echo "Launching Streamlit..."
+streamlit run app.py
